@@ -8,6 +8,7 @@ var productThree = document.getElementById('product-three');
 
 var productArray = [];
 var randomNumberArray = [];
+var counter = 0;
 
 // Constructor
 function Product(name) {
@@ -60,32 +61,46 @@ function generateRandomNumbers(){
 }
 
 
-// set i to zero
-var i = 0;
+
 
 // function to showARandomProduct
 function showARandomProduct (){
 
   // assign src, title, and alt product one
-  productOne.src = productArray[randomNumberArray[i][0]].filepath;
-  productOne.alt = productArray[randomNumberArray[i][0]].name;
-  productOne.title = productArray[randomNumberArray[i][0]].name;
-  productArray[randomNumberArray[i][0]].timesShown ++;
+  productOne.src = productArray[randomNumberArray[counter][0]].filepath;
+  productOne.alt = productArray[randomNumberArray[counter][0]].name;
+  productOne.title = productArray[randomNumberArray[counter][0]].name;
+  productArray[randomNumberArray[counter][0]].timesShown ++;
 
   // assign src, title, and alt product two
 
-  productTwo.src = productArray[randomNumberArray[i][1]].filepath;
-  productTwo.alt = productArray[randomNumberArray[i][1]].name;
-  productTwo.title = productArray[randomNumberArray[i][1]].name;
-  productArray[randomNumberArray[i][1]].timesShown ++;
+  productTwo.src = productArray[randomNumberArray[counter][1]].filepath;
+  productTwo.alt = productArray[randomNumberArray[counter][1]].name;
+  productTwo.title = productArray[randomNumberArray[counter][1]].name;
+  productArray[randomNumberArray[counter][1]].timesShown ++;
 
   // assign src, title, and alt product three
-  productThree.src = productArray[randomNumberArray[i][2]].filepath;
-  productThree.alt = productArray[randomNumberArray[i][2]].name;
-  productThree.title = productArray[randomNumberArray[i][2]].name;
-  productArray[randomNumberArray[i][2]].timesShown ++;
+  productThree.src = productArray[randomNumberArray[counter][2]].filepath;
+  productThree.alt = productArray[randomNumberArray[counter][2]].name;
+  productThree.title = productArray[randomNumberArray[counter][2]].name;
+  productArray[randomNumberArray[counter][2]].timesShown ++;
 
 
+}
+
+// function that renders the product name and the number of votes
+
+function renderResults() {
+  var ulEl = document.createElement('ul');
+  products.appendChild(ulEl);
+
+  // for loop for li items
+
+  for (var i = 0; i < productArray.length; i++){
+    var liEl = document.createElement('li');
+    liEl.textContent = `${productArray[i].name} got ${productArray[i].timesClicked} votes`;
+    ulEl.appendChild(liEl);
+  }
 }
 
 
@@ -97,11 +112,13 @@ function handleProductClick(event){
       productArray[j].timesClicked ++;
     }
   }
-  i ++;
-  if (i < 25){
+  counter ++;
+  if (counter < 25){
     showARandomProduct();
   } else {
+    products.removeEventListener('click', handleProductClick);
     products.innerHTML = '';
+    renderResults();
   }
 }
 
