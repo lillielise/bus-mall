@@ -8,7 +8,7 @@ var productThree = document.getElementById('product-three');
 
 var productArray = [];
 var randomNumberArray = [];
-var counter = 22;
+var counter = 0;
 
 // Arrays to hold data for the chart
 var votes = [];
@@ -133,15 +133,27 @@ function populateNames (){
 }
 
 // Chart Stuff
-var backgroundColors = 'navy';
-var hoverBackgroundColor = 'purple';
+var backgroundColors = [];
+
+
+function makeColors(){
+  for (var i = 0; i < productArray.length; i++){
+    var endOfColor = (i * .05).toFixed(2);
+    var color = `rgba(255, 0, 0, ${endOfColor})`;
+    backgroundColors.unshift(color);
+  }
+}
+
 
 var data = {
   labels: names, // names array declared earlier
   datasets: [{
     data: votes, // votes array declared earlier
+    label: 'Total Votes',
     backgroundColor: backgroundColors,
-    hoverBackgroundColor: hoverBackgroundColor,
+    hoverBackgroundColor: '#FFD0C7',
+    borderColor: 'black',
+    borderWidth: 2
   }]
 };
 
@@ -151,6 +163,11 @@ function drawChart() {
     type: 'bar',
     data: data,
     options: {
+      legend: {
+        labels: {
+          backgroundColor: 'black',
+        }
+      },
       responsive: false,
       animation: {
         duration: 2000,
@@ -179,6 +196,7 @@ function handleProductClick(event){
   } else {
     products.removeEventListener('click', handleProductClick);
     products.innerHTML = '';
+    makeColors();
     drawChart();
     // renderResults();
   }

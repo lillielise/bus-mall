@@ -2,8 +2,8 @@
 /* Body */
 
 body {
-  font-family:  'Bitter', serif;
-  width: 900px;
+  font-family: 'Noto Sans', sans-serif;
+  width: 1000px;
   margin: auto;
   text-align: center;
 }
@@ -11,9 +11,19 @@ body {
 /* Header */
 
 h1 {
-  font-size: 20px;
-  margin: 60px;
+  font-size: 30px;
+  padding: 30px;
+  font-weight: bold;
+  text-transform: uppercase;
+  word-spacing: 2px;
 }
+
+h2 {
+  font-size: 12px;
+  padding: 30px;
+  color: white;
+}
+
 
 
 /* Main */
@@ -21,7 +31,20 @@ h1 {
 img {
   height: 200px;
   float: left;
+  align-content: center;
   border: 2px black solid;
   margin: 10px;
 }
 
+#products {
+  border: 5px black solid;
+  background-color:rgb(33, 33, 171);
+  overflow: auto;
+  
+}
+
+/* main {
+  border: 2px black solid;
+} */
+
+/* Chart */
