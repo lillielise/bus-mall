@@ -1,0 +1,27 @@
+
+/* Body */
+
+body {
+  font-family:  'Bitter', serif;
+  width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+/* Header */
+
+h1 {
+  font-size: 20px;
+  margin: 60px;
+}
+
+
+/* Main */
+
+img {
+  height: 200px;
+  float: left;
+  border: 2px black solid;
+  margin: 10px;
+}
+
