@@ -8,7 +8,14 @@ var productThree = document.getElementById('product-three');
 
 var productArray = [];
 var randomNumberArray = [];
-var counter = 0;
+var counter = 22;
+
+// Arrays to hold data for the chart
+var votes = [];
+var names = [];
+
+var chartDrawn = false;
+
 
 // Constructor
 function Product(name) {
@@ -90,35 +97,90 @@ function showARandomProduct (){
 
 // function that renders the product name and the number of votes
 
-function renderResults() {
-  var ulEl = document.createElement('ul');
-  products.appendChild(ulEl);
+// function renderResults() {
+//   var ulEl = document.createElement('ul');
+//   products.appendChild(ulEl);
 
-  // for loop for li items
+//   // for loop for li items
 
-  for (var i = 0; i < productArray.length; i++){
-    var liEl = document.createElement('li');
-    liEl.textContent = `${productArray[i].name} got ${productArray[i].timesClicked} votes`;
-    ulEl.appendChild(liEl);
+//   for (var i = 0; i < productArray.length; i++){
+//     var liEl = document.createElement('li');
+//     liEl.textContent = `${productArray[i].name} got ${productArray[i].timesClicked} votes`;
+//     ulEl.appendChild(liEl);
+//   }
+//   drawChart();
+// }
+
+// function that adds up the times clicked
+function tallyTimesClicked(){
+  for (var j = 0; j < productArray.length; j++){
+    if (event.target.alt === productArray[j].name) {
+      // console.log(`${productArray[j].name} was clicked`);
+      productArray[j].timesClicked ++;
+      votes[j] =+ productArray[j].timesClicked;
+    } 
+
+  } 
+}
+
+// function that pushes the names and votes to the respective arrays
+
+function populateNames (){
+  for (var j = 0; j < productArray.length; j++){
+    names[j]= productArray[j].name;
+    votes[j] = 0;
   }
 }
 
+// Chart Stuff
+var backgroundColors = 'navy';
+var hoverBackgroundColor = 'purple';
+
+var data = {
+  labels: names, // names array declared earlier
+  datasets: [{
+    data: votes, // votes array declared earlier
+    backgroundColor: backgroundColors,
+    hoverBackgroundColor: hoverBackgroundColor,
+  }]
+};
+
+function drawChart() {
+  var ctx = document.getElementById('product-chart').getContext('2d');
+  songChart = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: false,
+      animation: {
+        duration: 2000,
+        easing: 'easeOutBounce'
+      }
+    },
+    scales: {
+      yAxes: [{
+        ticks: {
+          max: 10,
+          min: 0,
+          stepSize: 1.0
+        }
+      }]
+    }
+  });
+  chartDrawn = true;
+}
 
 // Event handler
 function handleProductClick(event){
-  for (var j = 0; j < productArray.length; j++){
-    if (event.target.alt === productArray[j].name) {
-      console.log(`${productArray[j].name} was clicked`);
-      productArray[j].timesClicked ++;
-    }
-  }
+  tallyTimesClicked();
   counter ++;
   if (counter < 25){
     showARandomProduct();
   } else {
     products.removeEventListener('click', handleProductClick);
     products.innerHTML = '';
-    renderResults();
+    drawChart();
+    // renderResults();
   }
 }
 
@@ -131,3 +193,4 @@ products.addEventListener('click', handleProductClick);
 // Show the images
 generateRandomNumbers();
 showARandomProduct();
+populateNames();
