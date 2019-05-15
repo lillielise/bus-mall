@@ -3,7 +3,7 @@
 
 body {
   font-family: 'Noto Sans', sans-serif;
-  width: 1000px;
+  width: 65%;
   margin: auto;
   text-align: center;
 }
@@ -21,7 +21,6 @@ h1 {
 h2 {
   font-size: 12px;
   padding: 30px;
-  color: white;
 }
 
 
@@ -29,22 +28,25 @@ h2 {
 /* Main */
 
 img {
-  height: 200px;
+  width: 200px;
   float: left;
-  align-content: center;
   border: 2px black solid;
-  margin: 10px;
+  margin: 20px;
 }
 
+
+
 #products {
-  border: 5px black solid;
-  background-color:rgb(33, 33, 171);
+  border: 2px black solid;
+  text-align: center;
   overflow: auto;
+  margin: auto;
+  width: 800px;
   
 }
 
-/* main {
-  border: 2px black solid;
-} */
+#product-one {
+  margin-left:75px;
+}
 
 /* Chart */
