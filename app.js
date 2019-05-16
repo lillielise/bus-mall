@@ -2,19 +2,44 @@
 
 // Global variables
 var products = document.getElementById('products');
+var clearData = document.getElementById('clear-data');
 var productOne = document.getElementById('product-one');
 var productTwo = document.getElementById('product-two');
 var productThree = document.getElementById('product-three');
 
 var productArray = [];
 var randomNumberArray = [];
-var counter = 0;
+var counter = 20;
 
 // Arrays to hold data for the chart
+var votesChart;
 var votes = [];
 var names = [];
 
 var chartDrawn = false;
+
+
+//check if ls is empty
+
+
+if (localStorage.getItem('products')){
+
+  var retrievedProducts = localStorage.getItem('products');
+  // console.log('this is the retrieved products', retrievedProducts);
+
+  var parsedProducts = JSON.parse(retrievedProducts);
+  // console.log('this is the parsed products', parsedProducts);
+  
+  productArray = parsedProducts;
+
+  
+
+
+} else {
+  createInstances();
+}
+
+
 
 
 // Constructor
@@ -27,26 +52,28 @@ function Product(name) {
 }
 
 // Instances
-new Product('bag');
-new Product('banana');
-new Product ('bathroom');
-new Product ('boots');
-new Product ('breakfast');
-new Product ('bubblegum');
-new Product ('chair');
-new Product ('cthulhu');
-new Product ('dog-duck');
-new Product ('dragon');
-new Product ('pen');
-new Product ('pet-sweep');
-new Product ('scissors');
-new Product ('shark');
-new Product ('sweep');
-new Product ('tauntaun');
-new Product ('unicorn');
-new Product ('usb');
-new Product ('water-can');
-new Product ('wine-glass');
+function createInstances(){
+  new Product('bag');
+  new Product('banana');
+  new Product ('bathroom');
+  new Product ('boots');
+  new Product ('breakfast');
+  new Product ('bubblegum');
+  new Product ('chair');
+  new Product ('cthulhu');
+  new Product ('dog-duck');
+  new Product ('dragon');
+  new Product ('pen');
+  new Product ('pet-sweep');
+  new Product ('scissors');
+  new Product ('shark');
+  new Product ('sweep');
+  new Product ('tauntaun');
+  new Product ('unicorn');
+  new Product ('usb');
+  new Product ('water-can');
+  new Product ('wine-glass');
+}
 
 // generate an array of arrays for the random number
 function generateRandomNumbers(){
@@ -95,21 +122,6 @@ function showARandomProduct (){
 
 }
 
-// function that renders the product name and the number of votes
-
-// function renderResults() {
-//   var ulEl = document.createElement('ul');
-//   products.appendChild(ulEl);
-
-//   // for loop for li items
-
-//   for (var i = 0; i < productArray.length; i++){
-//     var liEl = document.createElement('li');
-//     liEl.textContent = `${productArray[i].name} got ${productArray[i].timesClicked} votes`;
-//     ulEl.appendChild(liEl);
-//   }
-//   drawChart();
-// }
 
 // function that adds up the times clicked
 function tallyTimesClicked(){
@@ -118,9 +130,9 @@ function tallyTimesClicked(){
       // console.log(`${productArray[j].name} was clicked`);
       productArray[j].timesClicked ++;
       votes[j] =+ productArray[j].timesClicked;
-    } 
+    }
 
-  } 
+  }
 }
 
 // function that pushes the names and votes to the respective arrays
@@ -159,7 +171,7 @@ var data = {
 
 function drawChart() {
   var ctx = document.getElementById('product-chart').getContext('2d');
-  songChart = new Chart(ctx, {
+  votesChart = new Chart(ctx, {
     type: 'bar',
     data: data,
     options: {
@@ -188,25 +200,37 @@ function drawChart() {
 }
 
 // Event handler
-function handleProductClick(event){
+function handleProductClick(){
   tallyTimesClicked();
   counter ++;
   if (counter < 25){
     showARandomProduct();
   } else {
-    products.removeEventListener('click', handleProductClick);
     products.innerHTML = '';
     makeColors();
     drawChart();
-    // renderResults();
+
+    var stringifiedProducts = JSON.stringify(productArray);
+    localStorage.setItem('products', stringifiedProducts);
+    // console.log('stringified products', stringifiedProducts);
   }
 }
 
 
+// Event handler for clearing data
+function handleClearData(){
+  event.preventDefault();
+  localStorage.clear();
+  createInstances();
+  console.log('you clicked the button!');
+
+}
 
 
 // Event listener
 products.addEventListener('click', handleProductClick);
+// Event listener for clearing data
+// clearData.addEventListener('submit', handleClearData);
 
 // Show the images
 generateRandomNumbers();
