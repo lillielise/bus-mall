@@ -37,7 +37,7 @@ if (localStorage.getItem('products')){
 
 } else {
   createInstances();
-  drawChart();
+
 }
 
 
