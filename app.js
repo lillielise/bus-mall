@@ -9,7 +9,7 @@ var productThree = document.getElementById('product-three');
 
 var productArray = [];
 var randomNumberArray = [];
-var counter = 20;
+var counter = 0;
 
 // Arrays to hold data for the chart
 var votesChart;
@@ -37,6 +37,7 @@ if (localStorage.getItem('products')){
 
 } else {
   createInstances();
+  drawChart();
 }
 
 
@@ -220,8 +221,7 @@ function handleProductClick(){
 // Event handler for clearing data
 function handleClearData(){
   event.preventDefault();
-  localStorage.clear();
-  createInstances();
+  localStorage.removeItem('products');
   console.log('you clicked the button!');
 
 }
@@ -230,7 +230,7 @@ function handleClearData(){
 // Event listener
 products.addEventListener('click', handleProductClick);
 // Event listener for clearing data
-// clearData.addEventListener('submit', handleClearData);
+clearData.addEventListener('submit', handleClearData);
 
 // Show the images
 generateRandomNumbers();
