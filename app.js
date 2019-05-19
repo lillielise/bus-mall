@@ -6,6 +6,7 @@ var clearData = document.getElementById('clear-data');
 var productOne = document.getElementById('product-one');
 var productTwo = document.getElementById('product-two');
 var productThree = document.getElementById('product-three');
+var productChart = document.getElementById('product-chart');
 
 var productArray = [];
 var randomNumberArray = [];
@@ -37,6 +38,7 @@ if (localStorage.getItem('products')){
 
 } else {
   createInstances();
+  // drawChart();
 
 }
 
@@ -130,8 +132,10 @@ function tallyTimesClicked(){
     if (event.target.alt === productArray[j].name) {
       // console.log(`${productArray[j].name} was clicked`);
       productArray[j].timesClicked ++;
-      votes[j] =+ productArray[j].timesClicked;
+      console.log (productArray[j].timesClicked);
+      console.log(votes[j]);
     }
+    votes[j] = productArray[j].timesClicked;
 
   }
 }
@@ -152,7 +156,7 @@ var backgroundColors = [];
 function makeColors(){
   for (var i = 0; i < productArray.length; i++){
     var endOfColor = (i * .05).toFixed(2);
-    var color = `rgba(255, 0, 0, ${endOfColor})`;
+    var color = `rgba(0, 0, 255, ${endOfColor})`;
     backgroundColors.unshift(color);
   }
 }
@@ -171,7 +175,7 @@ var data = {
 };
 
 function drawChart() {
-  var ctx = document.getElementById('product-chart').getContext('2d');
+  var ctx = productChart.getContext('2d');
   votesChart = new Chart(ctx, {
     type: 'bar',
     data: data,
@@ -200,20 +204,38 @@ function drawChart() {
   chartDrawn = true;
 }
 
+function renderDeleteButton(){
+  var button = document.createElement('button');
+  button.innerHTML = 'Delete User Data';
+  clearData.append(button);
+}
+
 // Event handler
 function handleProductClick(){
   tallyTimesClicked();
   counter ++;
   if (counter < 25){
+    
     showARandomProduct();
+
   } else {
-    products.innerHTML = '';
-    makeColors();
-    drawChart();
+    products.innerHTML = 'Marketing Study Results';
+    products.style.fontSize = '40px';
+    products.style.margin = '0px';
+    products.style.border = 'none';
+    
+
+    renderDeleteButton();
+    clearData.addEventListener('submit', handleClearData);
+    
 
     var stringifiedProducts = JSON.stringify(productArray);
     localStorage.setItem('products', stringifiedProducts);
     // console.log('stringified products', stringifiedProducts);
+
+    makeColors();
+    drawChart();
+    products.removeEventListener('click', handleProductClick);
   }
 }
 
@@ -222,7 +244,6 @@ function handleProductClick(){
 function handleClearData(){
   event.preventDefault();
   localStorage.removeItem('products');
-  console.log('you clicked the button!');
 
 }
 
@@ -230,9 +251,12 @@ function handleClearData(){
 // Event listener
 products.addEventListener('click', handleProductClick);
 // Event listener for clearing data
-clearData.addEventListener('submit', handleClearData);
+
 
 // Show the images
+productChart.hidden = true;
+
 generateRandomNumbers();
 showARandomProduct();
 populateNames();
+
