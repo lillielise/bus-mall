@@ -53,7 +53,8 @@ img {
   overflow: auto;
   margin: 50px;
   padding: 50px;
-  width: 950px;
+  width: 900px;
+
   
 }
 
@@ -77,4 +78,5 @@ img {
   width: 950px;
   height: 500px;
   overflow: auto;
+  margin-left: 100px;
 }
