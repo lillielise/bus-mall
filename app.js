@@ -125,11 +125,17 @@ function showARandomProduct (){
   // productArray[randomNumberArray[counter][2]].timesShown ++;
 
   for(var i = 0; i < 3; i++) {
-    window[`product${productElementEnding[i]}`].src = productArray[randomNumberArray[counter][i]].filepath;
-    window[`product${productElementEnding[i]}`].alt = productArray[randomNumberArray[counter][i]].name;
-    window[`product${productElementEnding[i]}`].title = productArray[randomNumberArray[counter][i]].name;
+    // window[`product${productElementEnding[i]}`].src = productArray[randomNumberArray[counter][i]].filepath;
+    // window[`product${productElementEnding[i]}`].alt = productArray[randomNumberArray[counter][i]].name;
+    // window[`product${productElementEnding[i]}`].title = productArray[randomNumberArray[counter][i]].name;
+    // productArray[randomNumberArray[counter][i]].timesShown ++;
+
+    eval(`product${productElementEnding[i]}.src = productArray[randomNumberArray[counter][i]].filepath`);
+    eval(`product${productElementEnding[i]}.alt = productArray[randomNumberArray[counter][i]].name`);
+    eval(`product${productElementEnding[i]}.title = productArray[randomNumberArray[counter][i]].name`);
     productArray[randomNumberArray[counter][i]].timesShown ++;
   }
+  console.log(window)
 }
 
 
