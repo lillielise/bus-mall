@@ -30,10 +30,10 @@ if (localStorage.getItem('products')){
 
   var parsedProducts = JSON.parse(retrievedProducts);
   // console.log('this is the parsed products', parsedProducts);
-  
+
   productArray = parsedProducts;
 
-  
+
 
 
 } else {
@@ -103,26 +103,33 @@ function generateRandomNumbers(){
 // function to showARandomProduct
 function showARandomProduct (){
 
-  // assign src, title, and alt product one
-  productOne.src = productArray[randomNumberArray[counter][0]].filepath;
-  productOne.alt = productArray[randomNumberArray[counter][0]].name;
-  productOne.title = productArray[randomNumberArray[counter][0]].name;
-  productArray[randomNumberArray[counter][0]].timesShown ++;
+  let productElementEnding = ['One', 'Two', 'Three'];
 
-  // assign src, title, and alt product two
+  // // assign src, title, and alt product one
+  // productOne.src = productArray[randomNumberArray[counter][0]].filepath;
+  // productOne.alt = productArray[randomNumberArray[counter][0]].name;
+  // productOne.title = productArray[randomNumberArray[counter][0]].name;
+  // productArray[randomNumberArray[counter][0]].timesShown ++;
 
-  productTwo.src = productArray[randomNumberArray[counter][1]].filepath;
-  productTwo.alt = productArray[randomNumberArray[counter][1]].name;
-  productTwo.title = productArray[randomNumberArray[counter][1]].name;
-  productArray[randomNumberArray[counter][1]].timesShown ++;
+  // // assign src, title, and alt product two
 
-  // assign src, title, and alt product three
-  productThree.src = productArray[randomNumberArray[counter][2]].filepath;
-  productThree.alt = productArray[randomNumberArray[counter][2]].name;
-  productThree.title = productArray[randomNumberArray[counter][2]].name;
-  productArray[randomNumberArray[counter][2]].timesShown ++;
+  // productTwo.src = productArray[randomNumberArray[counter][1]].filepath;
+  // productTwo.alt = productArray[randomNumberArray[counter][1]].name;
+  // productTwo.title = productArray[randomNumberArray[counter][1]].name;
+  // productArray[randomNumberArray[counter][1]].timesShown ++;
 
+  // // assign src, title, and alt product three
+  // productThree.src = productArray[randomNumberArray[counter][2]].filepath;
+  // productThree.alt = productArray[randomNumberArray[counter][2]].name;
+  // productThree.title = productArray[randomNumberArray[counter][2]].name;
+  // productArray[randomNumberArray[counter][2]].timesShown ++;
 
+  for(var i = 0; i < 3; i++) {
+    window[`product${productElementEnding[i]}`].src = productArray[randomNumberArray[counter][i]].filepath;
+    window[`product${productElementEnding[i]}`].alt = productArray[randomNumberArray[counter][i]].name;
+    window[`product${productElementEnding[i]}`].title = productArray[randomNumberArray[counter][i]].name;
+    productArray[randomNumberArray[counter][i]].timesShown ++;
+  }
 }
 
 
@@ -215,7 +222,7 @@ function handleProductClick(){
   tallyTimesClicked();
   counter ++;
   if (counter < 25){
-    
+
     showARandomProduct();
 
   } else {
@@ -223,11 +230,11 @@ function handleProductClick(){
     products.style.fontSize = '40px';
     products.style.margin = '0px';
     products.style.border = 'none';
-    
+
 
     renderDeleteButton();
     clearData.addEventListener('submit', handleClearData);
-    
+
 
     var stringifiedProducts = JSON.stringify(productArray);
     localStorage.setItem('products', stringifiedProducts);
